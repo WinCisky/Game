@@ -3,8 +3,7 @@
 ##Done:  
   
 Helps with the rooms creation.  
-Manage the list of position where  
-rooms can be spawned  
+Manage the list of position where rooms can be spawned.  
 * ListAvailableRooms  
   
 ##ToDo:  
