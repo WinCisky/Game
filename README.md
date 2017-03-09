@@ -2,11 +2,10 @@
   
 ##Done:  
   
-* Helps with the rooms creation.  
-* Manage the list of position where  
-* rooms can be spawned  
-
-ListAvailableRooms  
+Helps with the rooms creation.  
+Manage the list of position where  
+rooms can be spawned  
+* ListAvailableRooms  
   
 ##ToDo:  
 1. Map  
