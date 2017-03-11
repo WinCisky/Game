@@ -33,6 +33,7 @@ int getLength(ptr l);
 ptr getElement(ptr l, int pos);
 void deletePos(ptr l, int pos);
 void stampa(ptr l);
+void add_elements(ptr l, char c, int x, int y);
 
 #endif /* LISTAVAILABLEROOMS_H */
 

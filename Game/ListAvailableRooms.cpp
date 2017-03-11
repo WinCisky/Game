@@ -83,16 +83,47 @@ void deletePos(ptr l, int pos) {
 }
 
 void stampa(ptr l) {
-    //parto a stampare dal secondo elemento
-    //(il primo è nullo)
-    ptr p = l->next;
-    //ciclo fino a quando non trovo un elemento nullo
-    //(fine della lista)
-    while (p != NULL) {
-        cout << "{[" << p->dir << "]\t";
-        cout << "[" << p->x << "]\t";
-        cout << "[" << p->y << "]}\n";
-        p = p->next;
+    //controllo che la lista non sia nulla
+    if(l->next != NULL){
+        //parto a stampare dal secondo elemento
+        //(il primo è nullo)
+        ptr p = l->next;
+        //ciclo fino a quando non trovo un elemento nullo
+        //(fine della lista)
+        while (p != NULL) {
+            cout << "{[" << p->dir << "]\t";
+            cout << "[" << p->x << "]\t";
+            cout << "[" << p->y << "]}\n";
+            p = p->next;
+        }
+    }else{
+        cout << "Lista vuota!";
+    }
+}
+
+
+void add_elements(ptr l, char c, int x, int y){
+    switch(c){
+        case 'N':
+            insertTail(l, 'N', x, y + 1);
+            insertTail(l, 'E', x, y + 1);
+            insertTail(l, 'W', x, y + 1);
+            break;
+        case 'S':
+            insertTail(l, 'S', x, y - 1);
+            insertTail(l, 'E', x, y - 1);
+            insertTail(l, 'W', x, y - 1);
+            break;
+        case 'E':
+            insertTail(l, 'N', x + 1, y);
+            insertTail(l, 'S', x + 1, y);
+            insertTail(l, 'E', x + 1, y);
+            break;
+        case 'W':
+            insertTail(l, 'N', x - 1, y);
+            insertTail(l, 'S', x - 1, y);
+            insertTail(l, 'W', x - 1, y);
+            break;
     }
 }
 

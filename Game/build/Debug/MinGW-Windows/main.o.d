@@ -1,3 +1,8 @@
-build/Debug/MinGW-Windows/main.o: main.cpp ListAvailableRooms.h
+build/Debug/MinGW-Windows/main.o: main.cpp ListAvailableRooms.h Map.h \
+ Dice.h
 
 ListAvailableRooms.h:
+
+Map.h:
+
+Dice.h:
