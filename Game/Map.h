@@ -16,6 +16,8 @@
 
 #define CELL_SIZE 3
 
+#include "ListAvailableRooms.h"
+
 struct stanza{
 	int x,y;
 	char room[CELL_SIZE][CELL_SIZE];
@@ -32,6 +34,8 @@ typedef stanza* ptr_stanza;
 class Map{
 protected:
 	int level;
+        ptr_stanza home;
+        ptr_stanza center;
 public:
 	//setup iniziale della mappa con n stanze
 	Map(int rooms);
@@ -40,11 +44,19 @@ public:
 	//ritorn la stanza appena creata a partire dalla stanza data e la posizione alla quale inserirla
 	//(ha le scale al prossimo livello?)
 	ptr_stanza InsertRoom(ptr_stanza actual_room, char direction, bool has_stairs);
+        
+        //cerco la stanza data la pos di questa
+        //devo partire dal centro del livello a cercare
+        ptr_stanza SearchRoom(int x, int y);
 
 	//parto dal liv precedente a creare il nuovo livello
 	//creo una lista delle pos a partire dalle quali posso creare delle stanza e ne scelgo una a ccaso
 	//scelto l'elemento dalla lista (a caso) chiamo la funzione InsertRoom con relativi parametri
 	void CreateLevel(ptr_stanza actual_room, int rooms);
+        
+        //ogni volta che inserisco una stanza devo assicurarmi che tutti i possibili collegamenti siano effettuati
+        //devo anche rimuovere dalla lista delle stanze instanziabili quelle collegate
+        void CreateConnections(ptr_stanza room_to_connect, ptr l);
 
 	//ritorno una stanza (modifico il vettore dato come parametro)
 	void ShowRoom(char room[][3]);

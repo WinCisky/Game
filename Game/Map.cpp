@@ -13,6 +13,11 @@ using namespace std;
 
 Map::Map(int rooms) {
     //creo il liv 0
+    home = new stanza;
+    home->x = 0;
+    home->y = 0;
+    //il centro del livello attuale è uguale alla prima stanza della mappa
+    center = home;
     level = 0;
     ptr_stanza newRoom = new stanza;
     newRoom->x = 0;
@@ -39,13 +44,30 @@ Map::Map(int rooms) {
         //rimuovo l'elemento dalla lista
         deletePos(l, item);
         //creo la stanza
-        this->InsertRoom(this, elem->dir, false);
+            //TODO
+            //cerco dove attaccarla
+            //controllo se ci sono collegamenti da fare
+            //creo la nuova stanza
+            InsertRoom(home, elem->dir, false);
         //aggiungo gli altri elementi alla lista
         add_elements(l, elem->dir ,elem->x, elem->y);
         //stampa(l);
         cout << '\n';
     }
     stampa(l);
+}
+
+ptr_stanza Map::SearchRoom(int x, int y){
+    //devo cercare nelle 4 direzioni
+    //TODO
+    return NULL;
+}
+
+void Map::CreateConnections(ptr_stanza room_to_connect, ptr l){
+    //per ogni stanza cerco se ci sono quelle i cui puntatori sono nulli
+    //si-> crea il collegamento.
+    //no-> fai nulla.
+    //TODO
 }
 
 ptr_stanza Map::InsertRoom(ptr_stanza actual_room, char direction, bool has_stairs) {
