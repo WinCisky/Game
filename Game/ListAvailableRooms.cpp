@@ -7,7 +7,7 @@
 #include "ListAvailableRooms.h"
 
 void insertTail(ptr l, char c, int x, int y) {
-    if (l->next == NULL) {
+    if (!l->next) {
         //inserisco l'elemento
         //nel caso in cui la lista sia vuota
         //(il primo elemento è e rimane vuoto)

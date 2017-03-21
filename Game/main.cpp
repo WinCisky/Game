@@ -10,6 +10,6 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    Map map(5);
+    Map map(2);
     return 0;
 }

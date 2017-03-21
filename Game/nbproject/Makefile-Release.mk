@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/Dice.o \
 	${OBJECTDIR}/ListAvailableRooms.o \
+	${OBJECTDIR}/ListRooms.o \
 	${OBJECTDIR}/Map.o \
 	${OBJECTDIR}/main.o
 
@@ -74,6 +75,11 @@ ${OBJECTDIR}/ListAvailableRooms.o: ListAvailableRooms.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ListAvailableRooms.o ListAvailableRooms.cpp
+
+${OBJECTDIR}/ListRooms.o: ListRooms.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ListRooms.o ListRooms.cpp
 
 ${OBJECTDIR}/Map.o: Map.cpp
 	${MKDIR} -p ${OBJECTDIR}

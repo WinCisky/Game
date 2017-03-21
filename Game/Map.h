@@ -25,6 +25,8 @@ struct stanza{
 	stanza* sud;
 	stanza* est;
 	stanza* ovest;
+        //up e down sono dei booleani
+        //TO MODIFY
 	stanza* up;
 	stanza* down;
 };
@@ -47,7 +49,9 @@ public:
         
         //cerco la stanza data la pos di questa
         //devo partire dal centro del livello a cercare
-        ptr_stanza SearchRoom(int x, int y);
+        bool SearchRoom(ptr_stanza stanza, char dir, int x, int y);
+        
+        bool RoomFound(ptr_stanza stanza, int x, int y);
 
 	//parto dal liv precedente a creare il nuovo livello
 	//creo una lista delle pos a partire dalle quali posso creare delle stanza e ne scelgo una a ccaso
