@@ -29,6 +29,7 @@ struct stanza{
         //TO MODIFY
 	stanza* up;
 	stanza* down;
+        bool visited;
 };
 
 typedef stanza* ptr_stanza;
@@ -38,6 +39,8 @@ protected:
 	int level;
         ptr_stanza home;
         ptr_stanza center;
+        
+        void mostraMappa(ptr_stanza stanza);
 public:
 	//setup iniziale della mappa con n stanze
 	Map(int rooms);
@@ -64,6 +67,12 @@ public:
 
 	//ritorno una stanza (modifico il vettore dato come parametro)
 	void ShowRoom(char room[][3]);
+        
+        //mostra la mappa ricorsivamente
+        //TO FIX
+        //NON MOSTRA ALCUNE STANZE!!!
+        //MOSTRA ALCUNE STANZE PIU VOLTE
+        void ShowMap();
 
 	/*
 	//aggiorno il gioco in base all'azione dell'utente

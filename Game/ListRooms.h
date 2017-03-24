@@ -32,7 +32,15 @@ struct list_rooms{
     list_rooms* next;
 };
 
+struct doors{
+	stanza* nord;
+	stanza* sud;
+	stanza* est;
+	stanza* ovest;
+};
+
 typedef list_rooms* ptr_list_rooms;
+typedef doors* ptr_doors;
 
 //insert an element at the end of the list
 void insert_elem(ptr_list_rooms list, int l, bool up, bool down, stanza* r);
@@ -43,6 +51,16 @@ void insert_elem(ptr_list_rooms list, int l, bool up, bool down, stanza* r);
 ptr_list_rooms search_return_elem(ptr_list_rooms head, int x, int y);
 
 //is the element in the list? (search from pos)
+
+//it seems to be useless because on the Map class there's another function that
+//automatically create the bridge between the new room and the old but 
+//if the map is large enough this function is able to scan all directions in order
+//to find all the possible neighbours
+//search for the possible doors(close rooms to the x y pos)
+ptr_doors search_doors(ptr_list_rooms list, int x, int y);
+
+//search for the possible doors using the direction to scan for the next door
+ptr_doors search_next_doors(ptr_list_rooms list, int x, int y, char dir);
 
 //print the list
 void print_list(ptr_list_rooms l);

@@ -25,12 +25,6 @@ Map::Map(int rooms) {
     home->y = 0;
     //il centro del livello attuale è uguale alla prima stanza della mappa
     center = home;
-    bool c = (!center);
-    bool n = (!center->nord);
-    bool s = (!center->sud);
-    bool e = (!center->est);
-    bool w = (!center->ovest);
-    cout << "is: " << c << n << s << e << w << '\n';
     level = 0;
     ptr_stanza newRoom = new stanza;
     newRoom->x = 0;
@@ -54,7 +48,7 @@ Map::Map(int rooms) {
         int item = d.RandInt(getLength(l)) + 1;
         //cout << item;
         ptr elem = getElement(l, item);
-        cout << elem->dir << " " << elem->x << " " << elem->y << '\n';
+        cout << "Chosen room to add to the map: " << " " << elem->x << " " << elem->y << " -> " << elem->dir  << '\n';
         //rimuovo l'elemento dalla lista
         deletePos(l, item);
         //creo la stanza
@@ -68,22 +62,18 @@ Map::Map(int rooms) {
             cout << "error \n";
         }else{
             //InsertRoom(room_to_ins->room, elem->dir, false);
-            //home non va bene dio spolpo
             insert_elem(rooms_list,0,false,false,InsertRoom(room_to_ins->room, elem->dir, false));
-            //aggiungo gli altri elementi alla lista
-            add_elements(l, elem->dir ,elem->x, elem->y);
+            //aggiungo gli altri elementi alla lista delle possibili posizioni dalle quali scegliere la stanza
+            
+            //DEVO CONTROLLARE CHE NON CI SIANO LE STANZE (SE CI SONO NON LE DEVO AGGIUNGERE ALLA LISTA)
+            
+            ptr_doors next_doors = search_next_doors(rooms_list, elem->x, elem->y, elem->dir);
+            add_elements(l, elem->dir ,elem->x, elem->y , (next_doors->nord!=NULL), (next_doors->sud!=NULL), (next_doors->est!=NULL), (next_doors->ovest!=NULL));
             //stampa(l);
-            cout << '\n';
         }
     }
     print_list(rooms_list);
     //stampa(l);
-    bool c2 = (!center);
-    bool n2 = (!center->nord);
-    bool s2 = (!center->sud);
-    bool e2 = (!center->est);
-    bool w2 = (!center->ovest);
-    cout << "is: " << c2 << n2 << s2 << e2 << w2 << '\n';
 }
 
 bool Map::RoomFound(ptr_stanza stanza, int x, int y){
@@ -183,6 +173,43 @@ ptr_stanza Map::InsertRoom(ptr_stanza actual_room, char direction, bool has_stai
             break;
     }
     return newRoom;
+}
+
+void Map::ShowMap(){
+    cout << "The Map: \n" << center->x << " " << center->y << "\n";
+    center->visited = true;
+    if(center->nord!=NULL){
+        mostraMappa(center->nord);        
+    }
+    if(center->sud!=NULL){
+        mostraMappa(center->sud);        
+    }
+    if(center->est!=NULL){
+        mostraMappa(center->est);        
+    }
+    if(center->ovest!=NULL){
+        mostraMappa(center->ovest);        
+    }
+}
+
+void Map::mostraMappa(ptr_stanza stanza){
+    if(!stanza->visited){
+        cout << stanza->x << " " << stanza->y << "\n";
+        stanza->visited=true;
+        
+        if(stanza->nord!=NULL){
+            mostraMappa(stanza->nord);        
+        }
+        if(stanza->sud!=NULL){
+            mostraMappa(stanza->sud);        
+        }
+        if(stanza->est!=NULL){
+            mostraMappa(stanza->est);        
+        }
+        if(stanza->ovest!=NULL){
+            mostraMappa(stanza->ovest);        
+        }
+    }
 }
 
 void Map::CreateLevel(ptr_stanza actual_room, int rooms) {

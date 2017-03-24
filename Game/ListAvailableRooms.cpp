@@ -102,27 +102,51 @@ void stampa(ptr l) {
 }
 
 
-void add_elements(ptr l, char c, int x, int y){
+void add_elements(ptr l, char c, int x, int y, bool n, bool s, bool e, bool w){
     switch(c){
         case 'N':
-            insertTail(l, 'N', x, y + 1);
-            insertTail(l, 'E', x, y + 1);
-            insertTail(l, 'W', x, y + 1);
+            if(!n){
+                insertTail(l, 'N', x, y + 1);
+            }
+            if(!e){
+                insertTail(l, 'E', x, y + 1);
+            }
+            if(!w){
+                insertTail(l, 'W', x, y + 1);
+            }
             break;
         case 'S':
-            insertTail(l, 'S', x, y - 1);
-            insertTail(l, 'E', x, y - 1);
-            insertTail(l, 'W', x, y - 1);
+            if(!e){
+                insertTail(l, 'E', x, y - 1);
+            }
+            if(!w){
+                insertTail(l, 'W', x, y - 1);
+            }
+            if(!s){
+                insertTail(l, 'S', x, y - 1);
+            }
             break;
         case 'E':
-            insertTail(l, 'N', x + 1, y);
-            insertTail(l, 'S', x + 1, y);
-            insertTail(l, 'E', x + 1, y);
+            if(!n){
+                insertTail(l, 'N', x + 1, y);
+            }
+            if(!e){
+                insertTail(l, 'E', x + 1, y);
+            }
+            if(!s){
+                insertTail(l, 'S', x + 1, y);
+            }
             break;
         case 'W':
-            insertTail(l, 'N', x - 1, y);
-            insertTail(l, 'S', x - 1, y);
-            insertTail(l, 'W', x - 1, y);
+            if(!n){
+                insertTail(l, 'N', x - 1, y);
+            }
+            if(!w){
+                insertTail(l, 'W', x - 1, y);
+            }
+            if(!s){
+                insertTail(l, 'S', x - 1, y);
+            }
             break;
     }
 }

@@ -10,6 +10,7 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    Map map(2);
+    Map map(5);
+    map.ShowMap();
     return 0;
 }
