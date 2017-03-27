@@ -62,6 +62,9 @@ ptr_doors search_doors(ptr_list_rooms list, int x, int y);
 //search for the possible doors using the direction to scan for the next door
 ptr_doors search_next_doors(ptr_list_rooms list, int x, int y, char dir);
 
+//update the neighbours reference
+void update_neighbours(ptr_stanza r, ptr_doors d);
+
 //print the list
 void print_list(ptr_list_rooms l);
 

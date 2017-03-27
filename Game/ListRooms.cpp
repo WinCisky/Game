@@ -28,6 +28,7 @@ void insert_elem(ptr_list_rooms list, int l, bool up, bool down, stanza* r){
         lista = lista->next;
     }
     lista->next = newElement;
+    update_neighbours(r, doors);
 }
 
 ptr_list_rooms search_return_elem(ptr_list_rooms head, int x, int y){
@@ -104,6 +105,21 @@ ptr_doors search_doors(ptr_list_rooms list, int x, int y){
         }
     }
     return found_doors;
+}
+
+void update_neighbours(ptr_stanza r, ptr_doors d){
+    if(d->nord!=NULL){
+        r->nord->sud=r;
+    }
+    if(d->sud!=NULL){
+        r->sud->nord=r;
+    }
+    if(d->est!=NULL){
+        r->est->ovest=r;
+    }
+    if(d->ovest!=NULL){
+        r->ovest->est=r;
+    }
 }
 
 void print_list(ptr_list_rooms l){

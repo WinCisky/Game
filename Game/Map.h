@@ -40,6 +40,8 @@ protected:
         ptr_stanza home;
         ptr_stanza center;
         
+        char stampa_mappa[13][13];
+        
         void mostraMappa(ptr_stanza stanza);
 public:
 	//setup iniziale della mappa con n stanze
@@ -64,23 +66,22 @@ public:
         //ogni volta che inserisco una stanza devo assicurarmi che tutti i possibili collegamenti siano effettuati
         //devo anche rimuovere dalla lista delle stanze instanziabili quelle collegate
         void CreateConnections(ptr_stanza room_to_connect, ptr l);
-
-	//ritorno una stanza (modifico il vettore dato come parametro)
-	void ShowRoom(char room[][3]);
         
-        //mostra la mappa ricorsivamente
-        //TO FIX
-        //NON MOSTRA ALCUNE STANZE!!!
-        //MOSTRA ALCUNE STANZE PIU VOLTE
+        //mostra le stanze della mappa ricorsivamente
         void ShowMap();
-
-	/*
-	//aggiorno il gioco in base all'azione dell'utente
-	void PlayerUpdate(char action);
-
-	//aggiorno la mappa (Ai to develop)
-	void MapUpdate();
-	*/
+        
+        //RESSETTA LA MAPPA
+        void resetMap();
+        //INIZIALIZZA LA MAPPA (dir=N -> crea la stanza a nord , S, E, W, C)
+        void initMap(char dir, ptr_stanza room);
+        //RIEMPIE LA MAPPA
+        void fillMap(ptr_stanza room);
+        //MOSTRA LA MAPPA
+        void stampaMap(ptr_stanza room);
+        
+        //support function for initializing the room
+        ptr_stanza getCenter();
+        
 };
 
 #endif /* MAP_H */
