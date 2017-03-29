@@ -32,6 +32,14 @@ struct stanza{
         bool visited;
 };
 
+//definisco la struttura universale per giocatore e npc
+struct human{
+    char name;
+    int life;
+    int x;
+    int y;
+};
+
 typedef stanza* ptr_stanza;
 
 class Map{
@@ -63,10 +71,6 @@ public:
 	//scelto l'elemento dalla lista (a caso) chiamo la funzione InsertRoom con relativi parametri
 	void CreateLevel(ptr_stanza actual_room, int rooms);
         
-        //ogni volta che inserisco una stanza devo assicurarmi che tutti i possibili collegamenti siano effettuati
-        //devo anche rimuovere dalla lista delle stanze instanziabili quelle collegate
-        void CreateConnections(ptr_stanza room_to_connect, ptr l);
-        
         //mostra le stanze della mappa ricorsivamente
         void ShowMap();
         
@@ -77,7 +81,7 @@ public:
         //RIEMPIE LA MAPPA
         void fillMap(ptr_stanza room);
         //MOSTRA LA MAPPA
-        void stampaMap(ptr_stanza room);
+        void stampaMap(ptr_stanza room, human Player);
         
         //support function for initializing the room
         ptr_stanza getCenter();

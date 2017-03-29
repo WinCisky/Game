@@ -27,6 +27,11 @@ Map::Map(int rooms) {
     home->ovest = NULL;
     home->x = 0;
     home->y = 0;
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            home->room[i][j]=' ';
+        }
+    }
     //il centro del livello attuale è uguale alla prima stanza della mappa
     center = home;
     level = 0;
@@ -52,7 +57,7 @@ Map::Map(int rooms) {
         int item = d.RandInt(getLength(l)) + 1;
         //cout << item;
         ptr elem = getElement(l, item);
-        cout << "Chosen room to add to the map: " << " " << elem->x << " " << elem->y << " -> " << elem->dir << '\n';
+        //cout << "Chosen room to add to the map: " << " " << elem->x << " " << elem->y << " -> " << elem->dir << '\n';
         //rimuovo l'elemento dalla lista
         deletePos(l, item);
         //creo la stanza
@@ -65,8 +70,10 @@ Map::Map(int rooms) {
         if (room_to_ins == NULL) {
             cout << "error \n";
         } else {
+            bool stairs = (rooms-i == 1);
+            
             //InsertRoom(room_to_ins->room, elem->dir, false);
-            insert_elem(rooms_list, 0, false, false, InsertRoom(room_to_ins->room, elem->dir, false));
+            insert_elem(rooms_list, 0, stairs, false, InsertRoom(room_to_ins->room, elem->dir, false));
             //aggiungo gli altri elementi alla lista delle possibili posizioni dalle quali scegliere la stanza
 
             //DEVO CONTROLLARE CHE NON CI SIANO LE STANZE (SE CI SONO NON LE DEVO AGGIUNGERE ALLA LISTA)
@@ -76,7 +83,7 @@ Map::Map(int rooms) {
             //stampa(l);
         }
     }
-    print_list(rooms_list);
+    //print_list(rooms_list);
     //stampa(l);
 }
 
@@ -130,13 +137,6 @@ bool Map::SearchRoom(ptr_stanza stanza, char dir, int x, int y) {
                 break;
         }
     }
-}
-
-void Map::CreateConnections(ptr_stanza room_to_connect, ptr l) {
-    //per ogni stanza cerco se ci sono quelle i cui puntatori sono nulli
-    //si-> crea il collegamento.
-    //no-> fai nulla.
-    //TODO
 }
 
 ptr_stanza Map::InsertRoom(ptr_stanza actual_room, char direction, bool has_stairs) {
@@ -231,7 +231,17 @@ void Map::initMap(char dir, ptr_stanza room) {
     
     //se ci sono le stanze le mostro altrimenti metto i muri
     switch(dir){
+        //devo inserire il contenuto delle stanze 
+        //in stampa_mappa alla relativa posizione
         case 'C':
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j < 3; j++){
+                    stampa_mappa[7-j][5+i]=room->room[i][j];
+                    if(room->room[i][j]=='S'){
+                        cout << "C" << '\n';
+                    }
+                }
+            }
             stampa_mappa[4][5] = H;
             stampa_mappa[4][7] = H;
             stampa_mappa[8][5] = H;
@@ -254,6 +264,14 @@ void Map::initMap(char dir, ptr_stanza room) {
             }
             break;
         case 'W':
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j < 3; j++){
+                    stampa_mappa[7-j][1+i]=room->ovest->room[i][j];
+                    if(room->ovest->room[i][j]=='S'){
+                        cout << "W" << '\n';
+                    }
+                }
+            }
             stampa_mappa[4][1] = H;
             stampa_mappa[4][3] = H;
             stampa_mappa[8][1] = H;
@@ -271,6 +289,14 @@ void Map::initMap(char dir, ptr_stanza room) {
             }
             break;
         case 'E':
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j < 3; j++){
+                    stampa_mappa[7-j][9+i]=room->est->room[i][j];
+                    if(room->est->room[i][j]=='S'){
+                        cout << "E" << '\n';
+                    }
+                }
+            }
             stampa_mappa[4][9] = H;
             stampa_mappa[4][11] = H;
             stampa_mappa[8][9] = H;
@@ -288,6 +314,14 @@ void Map::initMap(char dir, ptr_stanza room) {
             }
             break;
         case 'S':
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j < 3; j++){
+                    stampa_mappa[11-j][5+i]=room->sud->room[i][j];
+                    if(room->sud->room[i][j]=='S'){
+                        cout << "S" << '\n';
+                    }
+                }
+            }
             stampa_mappa[9][4] = V;
             stampa_mappa[9][8] = V;
             stampa_mappa[11][4] = V;
@@ -305,6 +339,14 @@ void Map::initMap(char dir, ptr_stanza room) {
             }
             break;
         case 'N':
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j < 3; j++){
+                    stampa_mappa[3-j][5+i]=room->nord->room[i][j];
+                    if(room->nord->room[i][j]=='S'){
+                        cout << "N" << '\n';
+                    }
+                }
+            }
             stampa_mappa[0][5] = H;
             stampa_mappa[0][7] = H;
             stampa_mappa[1][4] = V;
@@ -366,10 +408,12 @@ void Map::fillMap(ptr_stanza room){
     
 }
 
-void Map::stampaMap(ptr_stanza room) {
+void Map::stampaMap(ptr_stanza room, human Player) {
     resetMap();
     
     fillMap(room);
+    
+    stampa_mappa[6-Player.y][6+Player.x]=Player.name;
     
     int h, b;
     for (h = 0; h < pos; h++) {

@@ -7,7 +7,7 @@
 #include "ListRooms.h"
 
 void insert_elem(ptr_list_rooms list, int l, bool up, bool down, stanza* r){
-    cout << "Inserting element: " << r->x << " " << r->y << '\n';
+    //cout << "Inserting element: " << r->x << " " << r->y << '\n';
     ptr_list_rooms newElement = new (list_rooms);
     newElement->has_stairs_up = up;
     newElement->has_stirs_down = down;
@@ -15,14 +15,23 @@ void insert_elem(ptr_list_rooms list, int l, bool up, bool down, stanza* r){
     newElement->level = l;
     newElement->next = NULL;
     //devo cercare se ha i vicini
-    cout << "Searching for possible neighbors \n";
+    //cout << "Searching for possible neighbors \n";
     ptr_doors doors = search_doors(list, r->x, r->y);
-    cout << "N: " <<(r->nord==NULL)<< " S: " <<(r->sud==NULL)<< " E: " <<(r->est==NULL)<< " W: " <<(r->ovest==NULL)<< "\n";
-    cout << "N: " <<(doors->nord==NULL)<< " S: " <<(doors->sud==NULL)<< " E: " <<(doors->est==NULL)<< " W: " <<(doors->ovest==NULL)<< "\n";
+    //cout << "N: " <<(r->nord==NULL)<< " S: " <<(r->sud==NULL)<< " E: " <<(r->est==NULL)<< " W: " <<(r->ovest==NULL)<< "\n";
+    //cout << "N: " <<(doors->nord==NULL)<< " S: " <<(doors->sud==NULL)<< " E: " <<(doors->est==NULL)<< " W: " <<(doors->ovest==NULL)<< "\n";
     newElement->room->nord=doors->nord;
     newElement->room->sud=doors->sud;
     newElement->room->est=doors->est;
     newElement->room->ovest=doors->ovest;
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            newElement->room->room[i][j]=' ';
+        }
+    }
+    if(up){
+        cout << r->x << " " << r->y << '\n';
+        newElement->room->room[1][1]='S';
+    }
     ptr_list_rooms lista = list;
     while(lista->next != NULL){
         lista = lista->next;
@@ -37,13 +46,13 @@ ptr_list_rooms search_return_elem(ptr_list_rooms head, int x, int y){
     ptr_list_rooms found_elem = NULL;
     while(!found && (elem->next != NULL)){
         elem = elem->next;
-        cout << "Searching: " << x << " " << y << " found: " << elem->room->x << " " << elem->room->y;
+        //cout << "Searching: " << x << " " << y << " found: " << elem->room->x << " " << elem->room->y;
         if((elem->room->x == x) && (elem->room->y == y)){
             found = true;
             found_elem = elem;
-            cout << " yey! \n";
+            //cout << " yey! \n";
         }else{
-            cout << '\n';
+            //cout << '\n';
         }
     }
     return found_elem;
