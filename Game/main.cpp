@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
     ptr_stanza player = map.getCenter();
     human Player = {'P',3,0,0};
     //map.ShowMap();
-    map.stampaMap(player, Player);
+    player = map.stampaMap(player, Player);
     char c;
     while(true){
         //cout << "x: " << player->x << " y: " << player->y << '\n';
@@ -74,7 +74,7 @@ int main(int argc, char** argv) {
                     }
                 }
         }
-        map.stampaMap(player, Player);
+        player = map.stampaMap(player, Player);
     }
     return 0;
 }

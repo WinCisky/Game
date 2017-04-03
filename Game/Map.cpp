@@ -17,6 +17,7 @@ const int pos = 13;
 using namespace std;
 
 Map::Map(int rooms) {
+    n_basic_rooms = rooms;
     ptr_list_rooms rooms_list = new(list_rooms);
     rooms_list->next = NULL;
     //creo il liv 0
@@ -35,9 +36,6 @@ Map::Map(int rooms) {
     //il centro del livello attuale è uguale alla prima stanza della mappa
     center = home;
     level = 0;
-    ptr_stanza newRoom = new stanza;
-    newRoom->x = 0;
-    newRoom->y = 0;
     //creo la lista delle posizioni disponibili dove ampliare la mappa
     ptr l = new list;
     l->next = NULL;
@@ -267,9 +265,6 @@ void Map::initMap(char dir, ptr_stanza room) {
             for(int i = 0; i < 3; i++){
                 for(int j = 0; j < 3; j++){
                     stampa_mappa[7-j][1+i]=room->ovest->room[i][j];
-                    if(room->ovest->room[i][j]=='S'){
-                        cout << "W" << '\n';
-                    }
                 }
             }
             stampa_mappa[4][1] = H;
@@ -292,9 +287,6 @@ void Map::initMap(char dir, ptr_stanza room) {
             for(int i = 0; i < 3; i++){
                 for(int j = 0; j < 3; j++){
                     stampa_mappa[7-j][9+i]=room->est->room[i][j];
-                    if(room->est->room[i][j]=='S'){
-                        cout << "E" << '\n';
-                    }
                 }
             }
             stampa_mappa[4][9] = H;
@@ -317,9 +309,6 @@ void Map::initMap(char dir, ptr_stanza room) {
             for(int i = 0; i < 3; i++){
                 for(int j = 0; j < 3; j++){
                     stampa_mappa[11-j][5+i]=room->sud->room[i][j];
-                    if(room->sud->room[i][j]=='S'){
-                        cout << "S" << '\n';
-                    }
                 }
             }
             stampa_mappa[9][4] = V;
@@ -342,9 +331,6 @@ void Map::initMap(char dir, ptr_stanza room) {
             for(int i = 0; i < 3; i++){
                 for(int j = 0; j < 3; j++){
                     stampa_mappa[3-j][5+i]=room->nord->room[i][j];
-                    if(room->nord->room[i][j]=='S'){
-                        cout << "N" << '\n';
-                    }
                 }
             }
             stampa_mappa[0][5] = H;
@@ -408,10 +394,19 @@ void Map::fillMap(ptr_stanza room){
     
 }
 
-void Map::stampaMap(ptr_stanza room, human Player) {
+ptr_stanza Map::stampaMap(ptr_stanza room, human Player) {
     resetMap();
     
     fillMap(room);
+    if(stampa_mappa[6-Player.y][6+Player.x] == 'S'){
+        //creo il livello successivo
+        CreateLevel(room);
+        //il giocatore si ritrova al liv successivo
+        room = room->up;
+        cout << room->x << " " << room->y << " " << level << '\n';
+        resetMap();
+        fillMap(room);
+    }
     
     stampa_mappa[6-Player.y][6+Player.x]=Player.name;
     
@@ -422,6 +417,7 @@ void Map::stampaMap(ptr_stanza room, human Player) {
         }
         cout << "\n";
     }
+    return room;
 }
 
 // MAP PRINT FUNCTIONS
@@ -431,7 +427,47 @@ ptr_stanza Map::getCenter(){
     return center;
 }
 
-void Map::CreateLevel(ptr_stanza actual_room, int rooms) {
-
+void Map::CreateLevel(ptr_stanza actual_room) {
+    int rooms = (n_basic_rooms + (++level * 2));
+    ptr_list_rooms rooms_list = new(list_rooms);
+    rooms_list->next = NULL;
+    ptr_stanza newRoom = new stanza;
+    newRoom->x = 0;
+    newRoom->y = 0;
+    newRoom->down = actual_room;
+    actual_room->up = newRoom;
+    newRoom->nord = NULL;
+    newRoom->sud = NULL;
+    newRoom->est = NULL;
+    newRoom->ovest = NULL;
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            newRoom->room[i][j]=' ';
+        }
+    }
+    center = newRoom;
+    ptr l = new list;
+    l->next = NULL;
+    insertTail(l, 'N', 0, 0);
+    insertTail(l, 'S', 0, 0);
+    insertTail(l, 'E', 0, 0);
+    insertTail(l, 'W', 0, 0);
+    insert_elem(rooms_list, 0, false, false, center);
+    Dice d;
+    for (int i = 0; i < rooms; i++) {
+        int item = d.RandInt(getLength(l)) + 1;
+        ptr elem = getElement(l, item);
+        deletePos(l, item);
+        ptr_list_rooms room_to_ins = search_return_elem(rooms_list, elem->x, elem->y);
+        if (room_to_ins == NULL) {
+            cout << "error \n";
+        } else {
+            bool stairs = (rooms-i == 1);
+            insert_elem(rooms_list, 0, stairs, false, InsertRoom(room_to_ins->room, elem->dir, false));
+            ptr_doors next_doors = search_next_doors(rooms_list, elem->x, elem->y, elem->dir);
+            add_elements(l, elem->dir, elem->x, elem->y, (next_doors->nord != NULL), (next_doors->sud != NULL), (next_doors->est != NULL), (next_doors->ovest != NULL));
+        }
+    }
+    cout << "LEVEL CREATED!" << '\n';
 }
 

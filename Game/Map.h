@@ -44,7 +44,7 @@ typedef stanza* ptr_stanza;
 
 class Map{
 protected:
-	int level;
+	int level, n_basic_rooms;
         ptr_stanza home;
         ptr_stanza center;
         
@@ -69,7 +69,7 @@ public:
 	//parto dal liv precedente a creare il nuovo livello
 	//creo una lista delle pos a partire dalle quali posso creare delle stanza e ne scelgo una a ccaso
 	//scelto l'elemento dalla lista (a caso) chiamo la funzione InsertRoom con relativi parametri
-	void CreateLevel(ptr_stanza actual_room, int rooms);
+	void CreateLevel(ptr_stanza actual_room);
         
         //mostra le stanze della mappa ricorsivamente
         void ShowMap();
@@ -81,7 +81,8 @@ public:
         //RIEMPIE LA MAPPA
         void fillMap(ptr_stanza room);
         //MOSTRA LA MAPPA
-        void stampaMap(ptr_stanza room, human Player);
+        // è necessario tornare il puntatore per effettuare il cambio di stanza nel caso in cui si trovino le scale
+        ptr_stanza stampaMap(ptr_stanza room, human Player);
         
         //support function for initializing the room
         ptr_stanza getCenter();
@@ -89,4 +90,3 @@ public:
 };
 
 #endif /* MAP_H */
-
