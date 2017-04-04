@@ -44,7 +44,7 @@ typedef stanza* ptr_stanza;
 
 class Map{
 protected:
-	int level, n_basic_rooms;
+	int current_level, total_levels, n_basic_rooms;
         ptr_stanza home;
         ptr_stanza center;
         

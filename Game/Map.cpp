@@ -35,7 +35,8 @@ Map::Map(int rooms) {
     }
     //il centro del livello attuale è uguale alla prima stanza della mappa
     center = home;
-    level = 0;
+    current_level = 1;
+    total_levels = 1;
     //creo la lista delle posizioni disponibili dove ampliare la mappa
     ptr l = new list;
     l->next = NULL;
@@ -235,8 +236,7 @@ void Map::initMap(char dir, ptr_stanza room) {
             for(int i = 0; i < 3; i++){
                 for(int j = 0; j < 3; j++){
                     stampa_mappa[7-j][5+i]=room->room[i][j];
-                    if(room->room[i][j]=='S'){
-                        cout << "C" << '\n';
+                    if(room->room[i][j]=='s'){
                     }
                 }
             }
@@ -395,19 +395,23 @@ void Map::fillMap(ptr_stanza room){
 }
 
 ptr_stanza Map::stampaMap(ptr_stanza room, human Player) {
-    resetMap();
-    
-    fillMap(room);
     if(stampa_mappa[6-Player.y][6+Player.x] == 'S'){
-        //creo il livello successivo
-        CreateLevel(room);
+        if(room->up == NULL){
+            //creo il livello successivo
+            CreateLevel(room);
+        }
         //il giocatore si ritrova al liv successivo
         room = room->up;
-        cout << room->x << " " << room->y << " " << level << '\n';
-        resetMap();
-        fillMap(room);
+        current_level++;
+        room->room[1][1]='s';
+        //cout << room->x << " " << room->y << " " << level << '\n';
+    }else if(stampa_mappa[6-Player.y][6+Player.x] == 's'){
+        room=room->down;
+        current_level--;
     }
     
+    resetMap();
+    fillMap(room);
     stampa_mappa[6-Player.y][6+Player.x]=Player.name;
     
     int h, b;
@@ -428,7 +432,7 @@ ptr_stanza Map::getCenter(){
 }
 
 void Map::CreateLevel(ptr_stanza actual_room) {
-    int rooms = (n_basic_rooms + (++level * 2));
+    int rooms = (n_basic_rooms + (++total_levels * 2));
     ptr_list_rooms rooms_list = new(list_rooms);
     rooms_list->next = NULL;
     ptr_stanza newRoom = new stanza;
