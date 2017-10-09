@@ -1,7 +1,7 @@
 ## Game for academic purpose  
   
 ## How to play:  
-Use 'w','a','s','d'.  
+Use 'w', 'a', 's', 'd'.  
   
 ## Goal  
 Defeat the boss at the 10th floor.  
