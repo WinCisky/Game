@@ -1,20 +1,11 @@
 ## Game for academic purpose  
   
+## How to play:  
+Use 'w','a','s','d'.  
+  
+## Goal  
+Defeat the boss at the 10th floor.  
+  
 ## ToDo:  
-1. Map  
-2. Main Character  
-3. Enemies AI  
-4. Items  
-5. Boss, Friendly AI, ...  
-
-## Files:  
-1. main  
-Main File: esecuzione principale del programma  
-2. Dice  
-Classe Dado: crea numeri casuali  
-3. Map  
-Classe Mappa: crea la mappa e la gestisce  
-4. ListAvailableRooms  
-Definisce una struttura di tipo lista (FIFO) per la gestione della creazione delle nuove stanze  
-5. ListRooms  
-Definisce una struttura di tipo lista (FIFO) per la gestione delle stanze create e per la creazione delle nuove stanze (crea i collegamenti tra queste, ecc.)  
+1. BugFix 
+2. File Division
