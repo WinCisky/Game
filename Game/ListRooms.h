@@ -14,11 +14,17 @@
 #ifndef LISTROOMS_H
 #define LISTROOMS_H
 
+/*
+#include<ctime> // for the time() function
+#include<cstdlib>
 //(used for print the list)
 #include <iostream>
+
+#include "Dice.h"
 #include "Map.h"
 
 using namespace std;
+
 
 //1 definire le strutture dati
 //2 definire i metodi
@@ -39,11 +45,15 @@ struct doors{
 	stanza* ovest;
 };
 
+
+
 typedef list_rooms* ptr_list_rooms;
 typedef doors* ptr_doors;
+typedef stanza* ptr_stanza;
 
 //insert an element at the end of the list
-void insert_elem(ptr_list_rooms list, int l, bool up, bool down, stanza* r);
+//useful for creating the enemies in the level
+void insert_elem(ptr_list_rooms list, int l, bool up, bool down, stanza* r,ptrN listEnemy);
 
 //search first element of level x
 
@@ -67,6 +77,8 @@ void update_neighbours(ptr_stanza r, ptr_doors d);
 
 //print the list
 void print_list(ptr_list_rooms l);
+ * 
+ * */
 
 #endif /* LISTROOMS_H */
 

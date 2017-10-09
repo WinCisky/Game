@@ -1,8 +1,3 @@
-build/Debug/MinGW-Windows/ListRooms.o: ListRooms.cpp ListRooms.h Map.h \
- ListAvailableRooms.h
+build/Debug/MinGW-Windows/ListRooms.o: ListRooms.cpp ListRooms.h
 
 ListRooms.h:
-
-Map.h:
-
-ListAvailableRooms.h:

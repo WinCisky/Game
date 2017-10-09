@@ -6,75 +6,43 @@
 #include "ListAvailableRooms.h"
 #include "Map.h"
 #include "Dice.h"
+#include "ListEnemies.h"
 
 using namespace std;
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv) {    
+    //creo la mappa con n stanze iniziali
     Map map(7);
-    //return 0;
+    //posiziono la stanza del giocatore al centro
     ptr_stanza player = map.getCenter();
-    human Player = {'P',3,0,0};
-    //map.ShowMap();
-    player = map.stampaMap(player, Player);
+    //creo il giocatore con le statistiche iniziali
+    human Player = {'P',1,5,0,1,0,0,0,0,0};
+    cout << "Player spawned at pos x: " << Player.x << " y: " << Player.y << '\n';
+    //mostro la mappa subito dopo la creazione
+    BigPlayer result = map.stampaMap(player, Player);
+    Player = result.playerStats;
+    player = result.playerRoom;
+    //input giocatore
     char c;
-    while(true){
-        //cout << "x: " << player->x << " y: " << player->y << '\n';
-        //cout << "x: " << Player.x << " y: " << Player.y << '\n';
-        cin >> c;
-        switch(c){
-            case 'w':
-                if(Player.y == 1 && Player.x == 0){
-                    if(player->nord!=NULL){
-                        player=player->nord;
-                        Player.x = 0;
-                        Player.y = -1;
-                    }
-                }else{
-                    if(Player.y < 1){
-                        Player.y++;
-                    }
-                }
-                break;
-            case 's':
-                if(Player.y == -1 && Player.x == 0){
-                    if(player->sud!=NULL){
-                        player=player->sud;
-                        Player.x = 0;
-                        Player.y = 1;
-                    }
-                }else{
-                    if(Player.y > -1){
-                        Player.y--;
-                    }
-                }
-                break;
-            case 'd':
-                if(Player.y == 0 && Player.x == 1){
-                    if(player->est!=NULL){
-                        player=player->est;
-                        Player.x = -1;
-                        Player.y = 0;
-                    }
-                }else{
-                    if(Player.x < 1){
-                        Player.x++;
-                    }
-                }
-                break;
-            case 'a':
-                if(Player.y == 0 && Player.x == -1){
-                    if(player->ovest!=NULL){
-                        player=player->ovest;
-                        Player.x = 1;
-                        Player.y = 0;
-                    }
-                }else{
-                    if(Player.x > -1){
-                        Player.x--;
-                    }
-                }
-        }
-        player = map.stampaMap(player, Player);
+    //ciclo di gioco
+    while(!map.GameOver){
+            //debug
+            //cout << "x: " << player->x << " y: " << player->y << '\n';
+            //leggo il movimento del giocatore
+            cin >> c;
+            //muovo il giocatore
+            BigPlayer summary = map.EvalutatePlayerMovemet(c, player, Player);
+            player = summary.playerRoom;
+            Player = summary.playerStats;
+            //mostro la mappa aggiornata
+            BigPlayer result = map.stampaMap(player, Player);
+            Player = result.playerStats;
+            player = result.playerRoom;
+            //^ aggiungere i nemici, armi, attacco, difesa, vite
     }
+    
+    //aspetto l'input finale (faccio vedere il risultato del gioco prima di chiuderlo)
+    cin >> c;
+    
     return 0;
 }

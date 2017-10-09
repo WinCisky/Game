@@ -36,7 +36,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Dice.o \
+	${OBJECTDIR}/EnemiesManager.o \
 	${OBJECTDIR}/ListAvailableRooms.o \
+	${OBJECTDIR}/ListEnemies.o \
 	${OBJECTDIR}/ListRooms.o \
 	${OBJECTDIR}/Map.o \
 	${OBJECTDIR}/main.o
@@ -71,10 +73,20 @@ ${OBJECTDIR}/Dice.o: Dice.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Dice.o Dice.cpp
 
+${OBJECTDIR}/EnemiesManager.o: EnemiesManager.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EnemiesManager.o EnemiesManager.cpp
+
 ${OBJECTDIR}/ListAvailableRooms.o: ListAvailableRooms.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ListAvailableRooms.o ListAvailableRooms.cpp
+
+${OBJECTDIR}/ListEnemies.o: ListEnemies.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ListEnemies.o ListEnemies.cpp
 
 ${OBJECTDIR}/ListRooms.o: ListRooms.cpp
 	${MKDIR} -p ${OBJECTDIR}

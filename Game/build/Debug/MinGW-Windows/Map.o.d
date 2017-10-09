@@ -1,10 +1,12 @@
 build/Debug/MinGW-Windows/Map.o: Map.cpp Map.h ListAvailableRooms.h \
- Dice.h ListRooms.h
+ ListRooms.h Dice.h ListEnemies.h
 
 Map.h:
 
 ListAvailableRooms.h:
 
+ListRooms.h:
+
 Dice.h:
 
-ListRooms.h:
+ListEnemies.h:
