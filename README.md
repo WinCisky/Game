@@ -1,11 +1,10 @@
 ## Game for academic purpose  
   
-## How to play:  
+### Description
+A basic command line game (read Progetto2017.pdf for more info).
+
+### How to play:  
 Use 'w', 'a', 's', 'd'.  
   
-## Goal  
+### Goal  
 Defeat the boss at the 10th floor.  
-  
-## ToDo:  
-1. BugFix 
-2. File Division
